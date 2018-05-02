@@ -1,6 +1,6 @@
 # Title: Larger anticipatory postural adjustments relate to later and larger reactive steps in people with PD
 # Script File by: Keith Lohse
-# Date: 2018-04-24
+# Date: 2018-05-01
 
 ## Opening libraries -----------------------------------------------------------
 library("ggplot2"); library("lme4"); library("car"); library("dplyr"); 
@@ -16,6 +16,7 @@ list.files()
 
 # Participant #15 was excluded based on influence statistics. 
 # To recreate the final analyses, import data_PETERSON_MASTER_no15
+# To load the full dataset without exclusions, import data_PETERSON_MASTER_05012018.csv
 DATA<-read.csv("./data_PETERSON_MASTER_no15.csv", header = TRUE, sep=",",  
                na.strings=c("NA","NaN"," ",""))
 

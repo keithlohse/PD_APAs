@@ -4,14 +4,14 @@
 
 ## Opening packages ------------------------------------------------------------
 library("ggplot2"); library("lme4"); library("car"); library("dplyr"); 
-library("lmerTest"); library("influence.ME"); library("boot")
+library("lmerTest"); library("influence.ME"); library("boot"); library("scales")
 
 ##----------------------- Data Cleaning and QA ---------------------------------
 ## Setting the Directory -------------------------------------------------------
 # Make sure the data files from GitHub are saved locally and set the working
 # directory to that location. 
 getwd()
-setwd("C:/Users/yourname/Documents/GitHub/PD_APAs")
+setwd("C:/Users/u6015231/Documents/GitHub/PD_APAs")
 list.files()
 
 # Participant #15 was excluded based on influence statistics. 
@@ -166,17 +166,18 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
 ## Figure 2A -------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = StepLength)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.8) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
+  scale_fill_colorblind() +
+  scale_color_colorblind() +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Step Length (m)") + labs(title="Forward Stepping")
@@ -260,8 +261,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 # Figure 2B --------------------------------------------------------------------
@@ -388,8 +389,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 # Figure 2C --------------------------------------------------------------------
@@ -482,8 +483,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -578,8 +579,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -644,8 +645,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -741,8 +742,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -837,10 +838,9 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
 
 
 
@@ -938,8 +938,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -1002,10 +1002,12 @@ plot(x) # We can visually see if individual estimates for any of the effects
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
 
+
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
 
 # Figure 3A --------------------------------------------------------------------
 head(BACKWARD)
@@ -1097,8 +1099,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -1220,8 +1222,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -1344,8 +1346,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -1410,8 +1412,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -1477,8 +1479,8 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
@@ -1544,6 +1546,6 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 ## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
-boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
+boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction

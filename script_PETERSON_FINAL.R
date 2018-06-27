@@ -2,16 +2,16 @@
 # Script File by: Keith Lohse
 # Date: 2018-04-24
 
-## Opening libraries -----------------------------------------------------------
+## Opening packages ------------------------------------------------------------
 library("ggplot2"); library("lme4"); library("car"); library("dplyr"); 
-library("lmerTest"); library("influence.ME")
+library("lmerTest"); library("influence.ME"); library("boot")
 
 ##----------------------- Data Cleaning and QA ---------------------------------
 ## Setting the Directory -------------------------------------------------------
 # Make sure the data files from GitHub are saved locally and set the working
 # directory to that location. 
 getwd()
-setwd("C:/Users/yourname/Documents/GitHub/PD_APAs")
+setwd("C:/Users/u6015231/Documents/GitHub/PD_APAs")
 list.files()
 
 # Participant #15 was excluded based on influence statistics. 
@@ -163,6 +163,13 @@ plot(x) # We can visually see if individual estimates for any of the effects
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
 
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
+
 ## Figure 2A -------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = StepLength)) +
@@ -250,6 +257,11 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 # Figure 2B --------------------------------------------------------------------
 head(FORWARD)
@@ -374,6 +386,11 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
 # Figure 2C --------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = ML_MOS)) +
@@ -461,6 +478,13 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
 
 # Figure 2D --------------------------------------------------------------------
 head(FORWARD)
@@ -552,6 +576,10 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
 # Fwd AP_COMatFO ----------------------------------------------------------------------------
@@ -612,6 +640,12 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
 # Figure 2F --------------------------------------------------------------------
@@ -704,6 +738,13 @@ plot(x) # We can visually see if individual estimates for any of the effects
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
 
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
+
 # Figure 2E --------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = ML_COMatFO)) +
@@ -794,9 +835,10 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-
-
-
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
 
@@ -825,6 +867,8 @@ plot(g3)
 #First, we will create a mean centered version of the APA variable
 BACKWARD$APA.c<-BACKWARD$APA-mean(BACKWARD$APA)
 summary(BACKWARD$APA)
+BACKWARD$subject<-factor(BACKWARD$subject)
+summary(BACKWARD$subject)
 
 #  Next, we will build a series of three models
 # 1) Trial
@@ -851,6 +895,7 @@ f02<-lmer(StepLength~
 summary(f02)
 
 # Model #3 Adding in the Interaction FOG.c
+summary(BACKWARD$StepLength)
 f03<-lmer(StepLength~
             # Fixed-effects
             1+
@@ -889,6 +934,12 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
 ## Bckwrd Step latency ---------------------------------------------------------
@@ -949,6 +1000,11 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 # Figure 3A --------------------------------------------------------------------
 head(BACKWARD)
@@ -1037,6 +1093,13 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
 
 # Figure 3B --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = APA, y = ML_MOS)) +
@@ -1154,6 +1217,13 @@ plot(x) # We can visually see if individual estimates for any of the effects
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
 
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
+
 # Figure 3C --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = APA, y = AP_MOS)) +
   geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
@@ -1231,7 +1301,8 @@ f02<-lmer(stepWidth~
 summary(f02)
 
 # Model #3 Adding in the Interaction FOG.c
-f03<-lmer(stepWidth~
+summary(BACKWARD$stepWidth)
+f03<-lmer(log(stepWidth)~
             # Fixed-effects
             1+
             trial_num+APA.c*FOG.c+ 
@@ -1271,6 +1342,10 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
 # Bckwrd AP_COMatFO ------------------------------------------------------------
@@ -1331,6 +1406,12 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
 
 
 
@@ -1394,6 +1475,11 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+
 
 
 # Bckwrd COM displacement ----------------------------------------------------------------------------
@@ -1416,7 +1502,8 @@ f02<-lmer(COMdisp~
 summary(f02)
 
 # Model #3 Adding in the Interaction FOG.c
-f03<-lmer(log(COMdisp+1)~
+plot(density(log(BACKWARD$COMdisp), na.rm=TRUE))
+f03<-lmer(COMdisp~
             # Fixed-effects
             1+
             trial_num+APA.c*FOG.c+ 
@@ -1454,3 +1541,8 @@ plot(x) # We can visually see if individual estimates for any of the effects
 
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
+
+## Bootstrap CIs for model F03 -------------------------------------------------
+b_par<-bootMer(x=f03,FUN=fixef, nsim=500, seed=1)
+boot.ci(b_par,type="perc", index = 1) #Set index to 1-5 for different effects
+# 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction

@@ -11,7 +11,7 @@ library("lmerTest"); library("influence.ME"); library("boot")
 # Make sure the data files from GitHub are saved locally and set the working
 # directory to that location. 
 getwd()
-setwd("C:/Users/u6015231/Documents/GitHub/PD_APAs")
+setwd("C:/Users/yourname/Documents/GitHub/PD_APAs")
 list.files()
 
 # Participant #15 was excluded based on influence statistics. 

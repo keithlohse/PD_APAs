@@ -4,7 +4,8 @@
 
 ## Opening packages ------------------------------------------------------------
 library("ggplot2"); library("lme4"); library("car"); library("dplyr"); 
-library("lmerTest"); library("influence.ME"); library("boot"); library("scales")
+library("lmerTest"); library("influence.ME"); library("boot"); library("lmeresampler")
+
 
 ##----------------------- Data Cleaning and QA ---------------------------------
 ## Setting the Directory -------------------------------------------------------
@@ -165,19 +166,22 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD STEP LENGTH ---------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                  B = 500, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 3, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+plot(boot1, index=3)
 
 
 ## Figure 2A -------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = StepLength)) +
-  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.8) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
   stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
-  scale_fill_colorblind() +
-  scale_color_colorblind() +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Step Length (m)") + labs(title="Forward Stepping")
@@ -268,9 +272,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # Figure 2B --------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = Sla)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Step Latency (s)") + labs(title="Forward Stepping")
@@ -298,9 +301,8 @@ plot(g4)
 # Figure 4A --------------------------------------------------------------------
 # Step Latency by Trial
 g1<-ggplot(FORWARD, aes(x = trial_num, y = Sla)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "Trial Number") +
   scale_y_continuous(name = "Step Latency (s)") + labs(title="Forward Stepping")
@@ -396,9 +398,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # Figure 2C --------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = ML_MOS)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Margin of Stability - ML (m)") + labs(title="Forward Stepping")
@@ -491,9 +492,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # Figure 2D --------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = AP_MOS)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Margin of Stability - AP (m)") + labs(title="Forward Stepping")
@@ -653,9 +653,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # Figure 2F --------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = AP_COMatFO)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "COM at Foot Off - AP (m)") + labs(title="Forward Stepping")
@@ -750,9 +749,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # Figure 2E --------------------------------------------------------------------
 head(FORWARD)
 g1<-ggplot(FORWARD, aes(x = APA, y = ML_COMatFO)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "COM at Foot Off - ML (m)") + labs(title="Forward Stepping")
@@ -1012,9 +1010,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 # Figure 3A --------------------------------------------------------------------
 head(BACKWARD)
 g1<-ggplot(BACKWARD, aes(x = APA, y = Sla)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Step Latency (s)") + labs(title="Backward Stepping")
@@ -1106,9 +1103,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 
 # Figure 3B --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = APA, y = ML_MOS)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Margin of Stability - ML (m)") + labs(title="Backward Stepping")
@@ -1134,9 +1130,8 @@ plot(g4)
 
 # Figure 4B --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = trial_num, y = ML_MOS)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "Trial Number") +
   scale_y_continuous(name = "Margin of Stability - ML (m)") + labs(title="Backward Stepping")
@@ -1229,9 +1224,8 @@ boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
 
 # Figure 3C --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = APA, y = AP_MOS)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "APA") +
   scale_y_continuous(name = "Margin of Stability - AP (m)") + labs(title="Backward Stepping")
@@ -1258,9 +1252,8 @@ plot(g4)
 
 # Figure 4C --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = trial_num, y = AP_MOS)) +
-  geom_point(aes(fill=subject), pch=21, size=2, stroke=1.25) +
-  scale_fill_grey()+
-  stat_smooth(aes(group=subject), col="grey", method="lm", lwd=1, se=FALSE) +
+  geom_point(aes(fill=subject), pch=21, size=2.5, stroke=1.25, alpha=0.5) +
+  stat_smooth(aes(group=subject, col=subject), method="lm", lwd=1, se=FALSE) +
   facet_wrap(~group)
 g2<-g1+scale_x_continuous(name = "Trial Number") +
   scale_y_continuous(name = "Margin of Stability - AP (m)") + labs(title="Backward Stepping")

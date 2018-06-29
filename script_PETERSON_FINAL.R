@@ -171,10 +171,10 @@ boot1 <- bootstrap(model = f03, fn = fixef, type = "case",
                   B = 500, resample = c(TRUE, FALSE))
 # specifies resamples at the subject level, but NOT the trial level.
 # the resample argument goes from the HIGHEST level to the LOWEST level.
-boot1
-boot.ci(boot1, index = 3, type="perc") #Set index to 1-5 for different effects
+boot1$t0
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-plot(boot1, index=3)
+plot(boot1, index=1)
 
 
 ## Figure 2A -------------------------------------------------------------------
@@ -264,10 +264,17 @@ plot(x) # We can visually see if individual estimates for any of the effects
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+
+## Bootstrap CIs for FORWARD STEP LATENCY --------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 500, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1$t0
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+plot(boot1, index=1)
+
 
 # Figure 2B --------------------------------------------------------------------
 head(FORWARD)
@@ -390,10 +397,16 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD ML MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1$t0
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+plot(boot1, index=5)
+
 
 # Figure 2C --------------------------------------------------------------------
 head(FORWARD)
@@ -483,10 +496,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1$t0
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+plot(boot1, index=5)
 
 
 # Figure 2D --------------------------------------------------------------------
@@ -578,11 +596,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1$t0
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=1)
 
 # Fwd AP_COMatFO ----------------------------------------------------------------------------
 # Model #1 Controlling for trial number
@@ -644,11 +666,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1$t0
+boot.ci(boot1, index = 3, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=2)
 
 # Figure 2F --------------------------------------------------------------------
 head(FORWARD)
@@ -740,10 +766,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 500, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+plot(boot1, index=1)
 
 
 # Figure 2E --------------------------------------------------------------------
@@ -835,11 +866,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 500, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=1)
 
 
 
@@ -935,11 +970,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=1)
 
 ## Bckwrd Step latency ---------------------------------------------------------
 # Model #1 Controlling for trial number
@@ -1001,11 +1040,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=1)
 
 # Figure 3A --------------------------------------------------------------------
 head(BACKWARD)
@@ -1095,11 +1138,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 500, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=1)
 
 # Figure 3B --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = APA, y = ML_MOS)) +
@@ -1216,11 +1263,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=1)
 
 # Figure 3C --------------------------------------------------------------------
 g1<-ggplot(BACKWARD, aes(x = APA, y = AP_MOS)) +
@@ -1298,7 +1349,7 @@ summary(f02)
 
 # Model #3 Adding in the Interaction FOG.c
 summary(BACKWARD$stepWidth)
-f03<-lmer(log(stepWidth)~
+f03<-lmer(stepWidth~
             # Fixed-effects
             1+
             trial_num+APA.c*FOG.c+ 
@@ -1338,10 +1389,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+plot(boot1, index=1)
 
 
 # Bckwrd AP_COMatFO ------------------------------------------------------------
@@ -1404,11 +1460,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=1)
 
 
 # Bckwrd ML_COMatFO ------------------------------------------------------------
@@ -1471,11 +1531,15 @@ cooks.distance(x) # we can calculte the influence of any given subject on the
 # full model by inspecting the cooks distances (ideally all below 1)
 
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1$t0
+boot.ci(boot1, index = 5, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
-
+plot(boot1, index=5)
 
 
 # Bckwrd COM displacement ----------------------------------------------------------------------------
@@ -1538,7 +1602,14 @@ plot(x) # We can visually see if individual estimates for any of the effects
 cooks.distance(x) # we can calculte the influence of any given subject on the 
 # full model by inspecting the cooks distances (ideally all below 1)
 
-## Bootstrap CIs for model F03 -------------------------------------------------
-b_par<-bootMer(x=f03,FUN=fixef, nsim=1000, seed=1, type="parametric")
-boot.ci(b_par, type="perc", index = 5) #Set index to 1-5 for different effects
+## Bootstrap CIs for FORWARD AP MOS --------------------------------------------
+boot1 <- bootstrap(model = f03, fn = fixef, type = "case", 
+                   B = 800, resample = c(TRUE, FALSE))
+# specifies resamples at the subject level, but NOT the trial level.
+# the resample argument goes from the HIGHEST level to the LOWEST level.
+boot1
+boot.ci(boot1, index = 1, type="perc") #Set index to 1-5 for different effects
 # 1= INT; 2 = trial_num; 3 = APA.c; 4 = FOG.c; 5 = APAxFOG Interaction
+plot(boot1, index=1)
+
+

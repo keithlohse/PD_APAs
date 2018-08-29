@@ -17,7 +17,7 @@ list.files()
 
 # Participant #15 was excluded based on influence statistics. 
 # To recreate the final analyses, import data_PETERSON_MASTER_no15
-# To load the full dataset without exclusions, import data_PETERSON_MASTER_05012018.csv
+# To load the full dataset without exclusions, import data_PETERSON_MASTER_20180501.csv
 DATA<-read.csv("./data_PETERSON_MASTER_no15.csv", header = TRUE, sep=",",  
                na.strings=c("NA","NaN"," ",""))
 
